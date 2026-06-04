@@ -257,3 +257,15 @@ Employee information is confidential and protected by HRMS security policies.
 
 Pass
 
+## Limitations of Google AI Studio Agent Playground
+
+During development, Google AI Studio Agent Playground was useful for prompt engineering and conversational testing, but it has several limitations for building a complete HRMS agent:
+
+* The agent behaves primarily as a chatbot and does not maintain persistent user authentication across sessions.
+* Employee identity and role information must be provided manually during testing instead of being automatically verified from a database.
+* The agent can simulate actions such as leave applications, approvals, and employee updates, but it only generates textual responses describing these actions.
+* Direct execution of business operations (e.g., updating leave balances, adding employees, approving requests) is not performed automatically.
+* Integration with external data sources and workflow automation is limited compared to dedicated orchestration platforms such as n8n.
+* Multi-step workflows requiring database updates, approval chains, and role-based enforcement are difficult to implement entirely within the playground environment.
+
+
