@@ -34,21 +34,44 @@ var tasks = new[]
     new TaskItem(3, 2, "Review Leave Requests", "Pending")
 };
 
+var attendances = new[]
+{
+    new Attendance(1, 1, new DateOnly(2026,06,01), "Present"),
+    new Attendance(2, 1, new DateOnly(2026,06,02), "Present"),
+    new Attendance(3, 2, new DateOnly(2026,06,01), "Absent"),
+    new Attendance(4, 2, new DateOnly(2026,06,02), "Present"),
+};
+
+//GET/EMPLOYEES
 app.MapGet("/employees", () => employees).WithName("GetEmployeeList").WithSummary("Returns all employees");
 
+//GET/EMPLOYEES/ID
 app.MapGet("/employees/{id}", (int id) =>
 {
     return employees.FirstOrDefault(e => e.Id == id);
 }).WithName("GetEmployeeDetails").WithSummary("Returns employee details");
 
+
+//GET/TASKS
 app.MapGet("/tasks", () => tasks).WithName("GetTasksList").WithSummary("Returns all tasks");
 
+//GET/TASKS/ID
 app.MapGet("/tasks/{id}", (int id) =>
 {
     return tasks.FirstOrDefault(t => t.Id == id);
 }).WithName("GetTaskDetails").WithSummary("Returns task details");
 
+//GET/ATTENDANCE
+app.MapGet("/attendances", ()=> attendances).WithName("GetAttendanceList")
+   .WithSummary("Returns attendance records");
 
+//GET/ATTENDANCE/ID
+app.MapGet("/attendances/{id}", (int id) =>
+{
+    return attendances.FirstOrDefault(a => a.Id == id);
+})
+.WithName("GetAttendanceDetails")
+.WithSummary("Returns attendance details");
 
 app.Run();
 
@@ -63,5 +86,12 @@ record TaskItem(
     int Id,
     int EmployeeId,
     string Title,
+    string Status
+);
+
+record Attendance(
+    int Id,
+    int EmployeeId,
+    DateOnly Date,
     string Status
 );
