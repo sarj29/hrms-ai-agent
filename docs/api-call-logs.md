@@ -2,29 +2,21 @@
 
 ## Test Case 1 - GetEmployeeList
 
-![GetEmployeeList](../screenshots/getEmployeeList-log.png)
-
+<img width="1081" height="442" alt="employeelist" src="https://github.com/user-attachments/assets/52a58b9a-390a-4fa2-8a7a-2e02d17e64c9" />
 ---
 
 ## Test Case 2 - GetEmployeeDetails
-
-![GetEmployeeDetails](../screenshots/getEmployeeDetails-log.png)
+<img width="1058" height="280" alt="employeedetails" src="https://github.com/user-attachments/assets/2544c802-b207-430a-a8a1-e338c5a32ae8" />
 
 ---
 
 ## Test Case 3 - GetTaskList
 
-![GetTaskList](../screenshots/getTaskList-log.png)
+<img width="1092" height="496" alt="tasklist" src="https://github.com/user-attachments/assets/67260bd2-571d-4d1d-916d-de710436b81f" />
 
 ---
 
 ## Test Case 4 - Employee With Highest Number of Tasks
-
-### User Prompt
-
-```text
-Which employee has the highest number of tasks assigned?
-```
 
 ### Expected Tool Usage
 
@@ -40,7 +32,7 @@ The agent must:
 * Count tasks per employee
 * Determine the employee with the highest task count
 
-![HighestTaskCount](../screenshots/highest-task-count.png)
+<img width="1078" height="221" alt="outofsysprompttestcase" src="https://github.com/user-attachments/assets/5c8847eb-654c-4eb2-bd1a-6a230cb7aa42" />
 
 ---
 
@@ -48,9 +40,7 @@ The agent must:
 
 The following trace demonstrates successful OpenAPI tool execution from Microsoft Foundry.
 
-### Evidence
-
-![OpenAPI Trace](../screenshots/foundry-openapi-trace.png)
+<img width="1587" height="862" alt="foundry-openapi-trace" src="https://github.com/user-attachments/assets/79dd9425-4d53-492c-9d1d-a0ebdeec10f8" />
 
 ### Observations
 
