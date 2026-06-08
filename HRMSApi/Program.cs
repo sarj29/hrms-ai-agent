@@ -40,6 +40,7 @@ var attendances = new[]
     new Attendance(2, 1, new DateOnly(2026,06,02), "Present"),
     new Attendance(3, 2, new DateOnly(2026,06,01), "Absent"),
     new Attendance(4, 2, new DateOnly(2026,06,02), "Present"),
+    new Attendance(5, 3, new DateOnly(2026,06,01), "Present"),
 };
 
 //GET/EMPLOYEES
