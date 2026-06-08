@@ -1,0 +1,42 @@
+GET http://localhost:5256/employees
+
+###
+
+GET http://localhost:5256/tasks
+
+###
+
+POST http://localhost:5256/tasks 
+Content-Type: application/json
+
+{
+    "employeeId" : 1,
+    "title" : "Brainstorm Workshop Ideas"
+}
+
+###
+
+GET http://localhost:5256/attendances
+
+
+###
+PUT http://localhost:5256/tasks/4/assign
+Content-Type: application/json
+
+{
+    "employeeId" : 3
+}
+
+###
+
+PUT http://localhost:5256/tasks/4/status
+Content-Type: application/json
+
+{
+  "status": "In Progress"
+}
+
+###
+
+DELETE http://localhost:5256/tasks/4
+

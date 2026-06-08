@@ -27,21 +27,60 @@ var employees = new[]
     new Employee(3, "Anu", "Finance", "Analyst")
 };
 
-var tasks = new[]
+var tasks = new List<TaskItem>//mutable collections
 {
-    new TaskItem(1,1, "Prepare HRMS Report", "In Progress"),
-    new TaskItem(2, 1, "Attend Standup Meeting", "Completed"),
-    new TaskItem(3, 2, "Review Leave Requests", "Pending")
+    new()
+    {
+        Id = 1,
+        EmployeeId = 1,
+        Title = "Prepare HRMS Report",
+        Status = "In Progress"
+    },
+
+    new()
+    {
+        Id = 2,
+        EmployeeId = 1,
+        Title = "Attend Standup Meeting",
+        Status = "Completed"
+    },
+
+    new()
+    {
+        Id = 3,
+        EmployeeId = 3,
+        Title = "FY2026 Trend Summary Report Approval",
+        Status = "Completed"
+    }
 };
 
-var attendances = new[]
+var attendances = new List<Attendance>//mutable collections
 {
-    new Attendance(1, 1, new DateOnly(2026,06,01), "Present"),
-    new Attendance(2, 1, new DateOnly(2026,06,02), "Present"),
-    new Attendance(3, 2, new DateOnly(2026,06,01), "Absent"),
-    new Attendance(4, 2, new DateOnly(2026,06,02), "Present"),
-    new Attendance(5, 3, new DateOnly(2026,06,01), "Present"),
+    new ()
+    {
+        Id = 1,
+        EmployeeId = 1,
+        Date = new DateOnly(2026,6,1),
+        Status = "Present"
+    },
+
+    new ()
+    {
+        Id = 2,
+        EmployeeId = 2,
+        Date = new DateOnly(2026,6,1),
+        Status = "Absent"
+    },
+
+    new ()
+    {
+        Id = 3,
+        EmployeeId = 3,
+        Date = new DateOnly(2026,6,1),
+        Status = "Present"
+    },
 };
+
 
 //GET/EMPLOYEES
 app.MapGet("/employees", () => employees).WithName("GetEmployeeList").WithSummary("Returns all employees");
@@ -62,6 +101,48 @@ app.MapGet("/tasks/{id}", (int id) =>
     return tasks.FirstOrDefault(t => t.Id == id);
 }).WithName("GetTaskDetails").WithSummary("Returns task details");
 
+//POST/TASKS
+app.MapPost("/tasks", (CreateTaskDto createTask) =>
+{
+    var id = tasks.Any() ? tasks.Max(t => t.Id) + 1 : 1;
+
+    var task = new TaskItem{
+        Id = id,
+        EmployeeId = createTask.EmployeeId,
+        Title = createTask.Title,
+        Status = "Pending"
+    };
+
+    tasks.Add(task);
+
+    return Results.Created($"/tasks/{task.Id}", task);
+}).WithName("CreateTask");
+
+//PUT/TASKS/ID
+app.MapPut("/tasks/{id}/assign", (int id, AssignTaskDto assign) =>
+{
+    var task = tasks.FirstOrDefault(t => t.Id == id);
+
+    if(task is null) return Results.NotFound();
+
+    task.EmployeeId = assign.EmployeeId;
+    return Results.Ok(task);
+
+
+}).WithName("AssignTask");
+
+//PUT/TASKS/STATUS
+app.MapPut("/tasks/{id}/status", (int id, UpdateTaskStatusDto updateStatus) =>
+{
+    var task = tasks.FirstOrDefault(t => t.Id == id);
+
+    if (task is null) return Results.NotFound($"Task {id} not found.");
+
+    task.Status = updateStatus.Status;
+    return Results.Ok(task);
+}).WithName("UpdateTaskStatus");
+
+
 //GET/ATTENDANCE
 app.MapGet("/attendances", ()=> attendances).WithName("GetAttendanceList")
    .WithSummary("Returns attendance records");
@@ -74,6 +155,34 @@ app.MapGet("/attendances/{id}", (int id) =>
 .WithName("GetAttendanceDetails")
 .WithSummary("Returns attendance details");
 
+//POST/ATTENDANCE/
+app.MapPost("/attendances", (MarkAttendanceDto mark) =>
+{
+    var id = attendances.Any() ? attendances.Max(a => a.Id) + 1: 1;
+
+    var record = new Attendance
+    {
+        Id = id,
+        EmployeeId = mark.EmployeeId,
+        Date = DateOnly.Parse(mark.Date),
+        Status = mark.Status
+    };
+
+    attendances.Add(record);
+
+    return Results.Created( $"/attendance/{record.Id}", record);
+}).WithName("MarkAttendance");
+
+app.MapDelete("/tasks/{id}", (int id) =>
+{
+    tasks.RemoveAll(task => task.Id == id);
+
+    return Results.NoContent();
+}
+);
+
+
+
 app.Run();
 
 record Employee(
@@ -83,16 +192,38 @@ record Employee(
     string Role
 );
 
-record TaskItem(
-    int Id,
+class TaskItem
+{
+    public int Id { get; set; }
+    public int EmployeeId { get; set; }
+    public string Title { get; set; } = "";
+    public string Status { get; set; } = "";
+}
+
+class Attendance
+{
+    public int Id { get; set; }
+    public int EmployeeId { get; set; }
+    public DateOnly Date { get; set; }
+    public string Status { get; set; } = "";
+}
+
+record CreateTaskDto(
     int EmployeeId,
-    string Title,
+    string Title
+);
+
+record AssignTaskDto(
+    int EmployeeId
+);
+
+record UpdateTaskStatusDto(
     string Status
 );
 
-record Attendance(
-    int Id,
+record MarkAttendanceDto(
     int EmployeeId,
-    DateOnly Date,
+    string Date,
     string Status
 );
+
