@@ -178,8 +178,7 @@ app.MapDelete("/tasks/{id}", (int id) =>
     tasks.RemoveAll(task => task.Id == id);
 
     return Results.NoContent();
-}
-);
+}).WithName("DeleteTask");
 
 
 
