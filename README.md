@@ -90,13 +90,6 @@ Read tools:
 * Do not require confirmation
 * Execute immediately
 
-Examples:
-
-* GetEmployeeList
-* GetEmployeeDetails
-* GetTaskList
-* GetAttendanceList
-
 ---
 
 ## Write Tools
@@ -107,13 +100,6 @@ Write tools:
 * Require user confirmation
 * Must be logged
 * Must display a summary before execution
-
-Examples:
-
-* CreateTask
-* AssignTask
-* UpdateTaskStatus
-* MarkAttendance
 
 ---
 
@@ -222,3 +208,7 @@ The project implements structured error handling for:
 ---
 
 # Agent & Tool Execution Evidence
+
+<img width="1638" height="838" alt="agent" src="https://github.com/user-attachments/assets/a7f9f2f3-f290-4282-af99-a65b9cbc8cdd" />
+
+<img width="1587" height="862" alt="foundry-openapi-trace" src="https://github.com/user-attachments/assets/90546f15-b8c2-4ba6-bbe0-d9064d54b578" />
